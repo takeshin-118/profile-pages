@@ -42,15 +42,21 @@ function formatDate(value: string) {
   }).format(new Date(value));
 }
 
-function PortalMark({ small = false }: { small?: boolean }) {
+function ChannelIcon({ small = false }: { small?: boolean }) {
   return (
-    <span className={`portal-mark${small ? " portal-mark--small" : ""}`} aria-hidden="true">
-      <span />
+    <span className={`channel-icon${small ? " channel-icon--small" : ""}`} aria-hidden="true">
+      <Image src="/channel-avatar.jpg" alt="" fill sizes={small ? "42px" : "96px"} />
     </span>
   );
 }
 
-export function TakeshinSite({ latestVideos }: { latestVideos: LatestVideo[] }) {
+export function TakeshinSite({
+  latestVideos,
+  latestShorts,
+}: {
+  latestVideos: LatestVideo[];
+  latestShorts: LatestVideo[];
+}) {
   const [theme, setTheme] = useState<Theme>("day");
   const [menuOpen, setMenuOpen] = useState(false);
   const [compactHeader, setCompactHeader] = useState(false);
@@ -137,7 +143,7 @@ export function TakeshinSite({ latestVideos }: { latestVideos: LatestVideo[] }) 
     <main>
       <header className={`site-header${compactHeader ? " site-header--compact" : ""}`}>
         <a className="brand" href="#top" aria-label="たけしん トップへ">
-          <PortalMark small />
+          <ChannelIcon small />
           <span className="brand-name">たけしん</span>
         </a>
 
@@ -232,7 +238,7 @@ export function TakeshinSite({ latestVideos }: { latestVideos: LatestVideo[] }) 
           <div>
             <p className="eyebrow">LATEST VIDEOS</p>
             <h2 id="latest-title">最新の冒険動画</h2>
-            <p>Shortsを除いた、最新の通常動画6本です。1日以内に自動で更新されます。</p>
+            <p>Shortsを除いた、最新の通常動画を最大4本表示します。1日以内に自動で更新されます。</p>
           </div>
           <a className="text-link" href={youtubeHref(`${siteConfig.channelUrl}/videos`, "latest-all")}>動画をすべて見る <span aria-hidden="true">→</span></a>
         </div>
@@ -259,9 +265,41 @@ export function TakeshinSite({ latestVideos }: { latestVideos: LatestVideo[] }) 
         </div>
       </section>
 
+      <section id="shorts" className="section section--latest section--shorts reveal" aria-labelledby="shorts-title">
+        <div className="section-heading section-heading--row">
+          <div>
+            <p className="eyebrow">LATEST SHORTS</p>
+            <h2 id="shorts-title">最新のショート動画</h2>
+            <p>再生回数の多いShortsを最大6本表示します。1日以内に自動で更新されます。</p>
+          </div>
+          <a className="text-link" href={youtubeHref(`${siteConfig.channelUrl}/shorts`, "shorts-all")}>Shortsをすべて見る <span aria-hidden="true">→</span></a>
+        </div>
+
+        <div className="video-grid shorts-grid">
+          {latestShorts.map((video, index) => (
+            <a className="video-card shorts-card" href={youtubeHref(video.watchUrl, `shorts-${index + 1}`)} key={video.id}>
+              <span className="video-thumbnail shorts-thumbnail">
+                <Image
+                  src={video.thumbnailUrl}
+                  alt=""
+                  fill
+                  sizes="(max-width: 420px) 50vw, (max-width: 760px) 50vw, (max-width: 1100px) 33vw, 25vw"
+                  unoptimized
+                />
+                <span className="play-button" aria-hidden="true">▶</span>
+              </span>
+              <span className="video-copy shorts-copy">
+                <strong>{video.title}</strong>
+                <time dateTime={video.publishedAt}>{formatDate(video.publishedAt)}</time>
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
+
       <section id="about" className="section section--about reveal" aria-labelledby="about-title">
         <div className="about-mark">
-          <PortalMark />
+          <ChannelIcon />
           <span>TAKESHIN</span>
         </div>
         <div className="about-copy">
@@ -287,7 +325,7 @@ export function TakeshinSite({ latestVideos }: { latestVideos: LatestVideo[] }) 
 
       <footer className="site-footer">
         <div className="footer-brand">
-          <PortalMark small />
+          <ChannelIcon small />
           <strong>たけしん</strong>
         </div>
         <div className="footer-links">

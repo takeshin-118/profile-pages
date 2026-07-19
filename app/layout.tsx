@@ -13,8 +13,8 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       "Minecraft: Java EditionのMOD環境で、まだ見たことのない世界を冒険するYouTubeチャンネル「たけしん」の公式サイト。",
     icons: {
-      icon: "/favicon.png",
-      shortcut: "/favicon.png",
+      icon: "/channel-avatar.jpg",
+      shortcut: "/channel-avatar.jpg",
     },
     openGraph: {
       title: "たけしん",
