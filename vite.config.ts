@@ -31,6 +31,9 @@ const localBindingConfig = {
         },
       ]
     : [],
+  images: {
+    binding: "IMAGES",
+  },
 };
 
 export default defineConfig(async () => {
@@ -45,7 +48,7 @@ export default defineConfig(async () => {
 
   return {
     server: {
-      allowedHosts: [".ngrok-free.dev"],
+      allowedHosts: [".ngrok-free.app", ".ngrok-free.dev"],
       ...(isCodexSeatbeltSandbox
         ? { watch: { useFsEvents: false, usePolling: true } }
         : {}),
