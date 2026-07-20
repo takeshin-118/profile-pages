@@ -34,6 +34,11 @@ function youtubeHref(target: string, kind: string) {
   return `/go/youtube?${params.toString()}`;
 }
 
+const youtubeLinkProps = {
+  target: "_blank",
+  rel: "noopener noreferrer",
+} as const;
+
 function formatDate(value: string) {
   return new Intl.DateTimeFormat("ja-JP", {
     year: "numeric",
@@ -158,7 +163,7 @@ export function TakeshinSite({
             <span aria-hidden="true">{theme === "day" ? "☀" : "☾"}</span>
             <span className="theme-label">{theme === "day" ? "昼" : "夜"}</span>
           </button>
-          <a className="header-youtube" href={youtubeHref(siteConfig.channelUrl, "header-channel")}>YouTube</a>
+          <a className="header-youtube" href={youtubeHref(siteConfig.channelUrl, "header-channel")} {...youtubeLinkProps}>YouTube</a>
           <button
             className="menu-button"
             type="button"
@@ -179,7 +184,7 @@ export function TakeshinSite({
         <a href="#adventure" onClick={closeMenu}>おすすめの冒険</a>
         <a href="#latest" onClick={closeMenu}>最新動画</a>
         <a href="#about" onClick={closeMenu}>たけしんについて</a>
-        <a href={youtubeHref(siteConfig.channelUrl, "mobile-channel")} onClick={closeMenu}>YouTubeチャンネルを見る</a>
+        <a href={youtubeHref(siteConfig.channelUrl, "mobile-channel")} onClick={closeMenu} {...youtubeLinkProps}>YouTubeチャンネルを見る</a>
       </nav>
 
       <section id="top" className="hero" aria-labelledby="hero-title">
@@ -195,7 +200,7 @@ export function TakeshinSite({
           <p className="hero-lead">{siteConfig.lead}</p>
           <div className="hero-buttons">
             <a className="button button--primary" href="#adventure">おすすめの冒険へ</a>
-            <a className="button button--glass" href={youtubeHref(siteConfig.channelUrl, "hero-channel")}>チャンネルを見る</a>
+            <a className="button button--glass" href={youtubeHref(siteConfig.channelUrl, "hero-channel")} {...youtubeLinkProps}>チャンネルを見る</a>
           </div>
         </div>
         <a className="scroll-cue" href="#adventure" aria-label="おすすめの冒険へスクロール">
@@ -225,7 +230,7 @@ export function TakeshinSite({
             <h3>{siteConfig.featured.title}</h3>
             <p>{siteConfig.featured.description}</p>
             {siteConfig.featured.playlistUrl ? (
-              <a className="button button--primary" href={youtubeHref(siteConfig.featured.playlistUrl, "featured-playlist")}>この冒険を見る</a>
+              <a className="button button--primary" href={youtubeHref(siteConfig.featured.playlistUrl, "featured-playlist")} {...youtubeLinkProps}>この冒険を見る</a>
             ) : (
               <a className="button button--secondary" href="#latest">最新動画を見て待つ</a>
             )}
@@ -240,12 +245,17 @@ export function TakeshinSite({
             <h2 id="latest-title">最新の冒険動画</h2>
             <p>Shortsを除いた、最新の通常動画を最大4本表示します。1日以内に自動で更新されます。</p>
           </div>
-          <a className="text-link" href={youtubeHref(`${siteConfig.channelUrl}/videos`, "latest-all")}>動画をすべて見る <span aria-hidden="true">→</span></a>
+          <a className="text-link" href={youtubeHref(`${siteConfig.channelUrl}/videos`, "latest-all")} {...youtubeLinkProps}>動画をすべて見る <span aria-hidden="true">→</span></a>
         </div>
 
         <div className="video-grid">
           {latestVideos.map((video, index) => (
-            <a className="video-card" href={youtubeHref(video.watchUrl, `latest-${index + 1}`)} key={video.id}>
+            <a
+              className="video-card"
+              href={youtubeHref(video.watchUrl, `latest-${index + 1}`)}
+              key={video.id}
+              {...youtubeLinkProps}
+            >
               <span className="video-thumbnail">
                 <Image
                   src={video.thumbnailUrl}
@@ -272,12 +282,17 @@ export function TakeshinSite({
             <h2 id="shorts-title">最新のショート動画</h2>
             <p>再生回数の多いShortsを最大6本表示します。1日以内に自動で更新されます。</p>
           </div>
-          <a className="text-link" href={youtubeHref(`${siteConfig.channelUrl}/shorts`, "shorts-all")}>Shortsをすべて見る <span aria-hidden="true">→</span></a>
+          <a className="text-link" href={youtubeHref(`${siteConfig.channelUrl}/shorts`, "shorts-all")} {...youtubeLinkProps}>Shortsをすべて見る <span aria-hidden="true">→</span></a>
         </div>
 
         <div className="video-grid shorts-grid">
           {latestShorts.map((video, index) => (
-            <a className="video-card shorts-card" href={youtubeHref(video.watchUrl, `shorts-${index + 1}`)} key={video.id}>
+            <a
+              className="video-card shorts-card"
+              href={youtubeHref(video.watchUrl, `shorts-${index + 1}`)}
+              key={video.id}
+              {...youtubeLinkProps}
+            >
               <span className="video-thumbnail shorts-thumbnail">
                 <Image
                   src={video.thumbnailUrl}
@@ -299,26 +314,39 @@ export function TakeshinSite({
 
       <section id="about" className="section section--about reveal" aria-labelledby="about-title">
         <div className="about-mark">
-          <ChannelIcon />
-          <span>TAKESHIN</span>
+          <Image
+            className="about-character"
+            src="/about-adventure.webp"
+            alt="Minecraftの世界に立つたけしんのキャラクター"
+            width={2048}
+            height={1107}
+            unoptimized
+          />
         </div>
         <div className="about-copy">
           <p className="eyebrow">ABOUT TAKESHIN</p>
           <h2 id="about-title">好奇心のまま、次の世界へ。</h2>
           <p>{siteConfig.about}</p>
-          <a className="text-link" href={youtubeHref(siteConfig.channelUrl, "about-channel")}>{siteConfig.handle} を見る <span aria-hidden="true">→</span></a>
+          <a className="text-link" href={youtubeHref(siteConfig.channelUrl, "about-channel")} {...youtubeLinkProps}>{siteConfig.handle} を見る <span aria-hidden="true">→</span></a>
         </div>
       </section>
 
       <section className="join-section reveal" aria-labelledby="join-title">
-        <div className="join-portal" aria-hidden="true"><span /></div>
+        <Image
+          className="join-character"
+          src="/join-character.png"
+          alt="Minecraftのたけしんのキャラクター"
+          width={700}
+          height={388}
+          unoptimized
+        />
         <div className="join-copy">
           <p className="eyebrow">JOIN THE ADVENTURE</p>
           <h2 id="join-title">チャンネル登録して、<br />次の冒険を見届けよう！</h2>
           <p>新しいMOD世界へのポータルが開いたら、YouTubeでお知らせします。</p>
           <div className="join-actions">
-            <a className="button button--youtube" href={youtubeHref(siteConfig.subscribeUrl, "subscribe")}>チャンネル登録</a>
-            <a className="text-link text-link--light" href={youtubeHref(siteConfig.channelUrl, "footer-channel")}>チャンネルを見る <span aria-hidden="true">→</span></a>
+            <a className="button button--youtube" href={youtubeHref(siteConfig.subscribeUrl, "subscribe")} {...youtubeLinkProps}>チャンネル登録</a>
+            <a className="text-link text-link--light" href={youtubeHref(siteConfig.channelUrl, "footer-channel")} {...youtubeLinkProps}>チャンネルを見る <span aria-hidden="true">→</span></a>
           </div>
         </div>
       </section>
@@ -330,7 +358,7 @@ export function TakeshinSite({
         </div>
         <div className="footer-links">
           <button type="button" onClick={() => privacyDialog.current?.showModal()}>プライバシー</button>
-          <a href={youtubeHref(siteConfig.channelUrl, "footer-link")}>YouTube</a>
+          <a href={youtubeHref(siteConfig.channelUrl, "footer-link")} {...youtubeLinkProps}>YouTube</a>
         </div>
         <p className="disclaimer">
           たけしん公式サイト<br />

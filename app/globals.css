@@ -114,7 +114,6 @@ img {
   font-size: 1.45rem;
   font-weight: 900;
   letter-spacing: 0.04em;
-  text-shadow: 0 3px 0 color-mix(in srgb, var(--earth) 40%, transparent);
 }
 
 .portal-mark {
@@ -363,7 +362,6 @@ img {
 .hero h1 {
   font-size: clamp(2.2rem, 5.6vw, 5rem);
   text-wrap: balance;
-  text-shadow: 0 5px 0 color-mix(in srgb, var(--earth) 36%, transparent);
 }
 
 .hero h1 span {
@@ -681,6 +679,7 @@ img {
 
 .about-mark {
   display: grid;
+  overflow: hidden;
   gap: 24px;
   place-items: center;
   min-height: 360px;
@@ -694,6 +693,13 @@ img {
   font-size: 0.72rem;
   font-weight: 900;
   letter-spacing: 0.18em;
+}
+
+.about-character {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .about-copy > p {
@@ -728,36 +734,16 @@ img {
 .join-section::before { top: -110px; right: 8%; }
 .join-section::after { bottom: -140px; left: 38%; }
 
-.join-portal {
+.join-character {
   position: relative;
   z-index: 1;
-  display: grid;
-  width: min(300px, 78vw);
-  aspect-ratio: 1;
+  display: block;
+  width: min(560px, 92vw);
+  height: auto;
   margin: 0 auto;
-  place-items: center;
-  border: 34px solid #8a684a;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.88), #6be0cf 25%, #8a6ee9 62%, #173d48 68%);
-  box-shadow: inset 0 0 44px rgba(255,255,255,0.75), 0 0 70px rgba(102, 232, 211, 0.46);
-  animation: portal-breathe 4s ease-in-out infinite;
+  object-fit: contain;
+  transform: scale(1.55);
 }
-
-.join-portal::before,
-.join-portal::after,
-.join-portal span {
-  position: absolute;
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  background: var(--grass);
-  content: "";
-  transform: rotate(18deg);
-}
-
-.join-portal::before { top: -38px; left: 42px; }
-.join-portal::after { right: -42px; bottom: 52px; background: var(--earth-light); }
-.join-portal span { top: -26px; right: 50px; width: 24px; height: 24px; background: var(--sky-deep); }
 
 .join-copy {
   position: relative;
@@ -937,7 +923,7 @@ img {
   .section--about { grid-template-columns: 1fr; }
   .about-mark { min-height: 290px; }
   .join-section { grid-template-columns: 1fr; gap: 56px; min-height: auto; text-align: center; }
-  .join-portal { width: 220px; border-width: 26px; }
+  .join-character { width: min(520px, 100%); transform: scale(1.35); }
   .join-copy { padding-left: 0; }
   .join-actions { align-items: stretch; flex-direction: column; justify-content: center; }
   .site-footer { grid-template-columns: 1fr; }
