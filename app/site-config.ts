@@ -23,7 +23,7 @@ export type LatestVideo = {
   id: string;
   title: string;
   publishedAt: string;
+  publishedLabel?: string;
   thumbnailUrl: string;
   watchUrl: string;
 };
-

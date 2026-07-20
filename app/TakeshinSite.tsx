@@ -268,7 +268,7 @@ export function TakeshinSite({
               </span>
               <span className="video-copy">
                 <strong>{video.title}</strong>
-                <time dateTime={video.publishedAt}>{formatDate(video.publishedAt)}</time>
+                <time dateTime={video.publishedAt}>{video.publishedLabel ?? formatDate(video.publishedAt)}</time>
               </span>
             </a>
           ))}
@@ -305,7 +305,7 @@ export function TakeshinSite({
               </span>
               <span className="video-copy shorts-copy">
                 <strong>{video.title}</strong>
-                <time dateTime={video.publishedAt}>{formatDate(video.publishedAt)}</time>
+                <time dateTime={video.publishedAt}>{video.publishedLabel ?? formatDate(video.publishedAt)}</time>
               </span>
             </a>
           ))}
